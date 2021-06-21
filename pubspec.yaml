@@ -30,6 +30,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   easy_dynamic_theme: ^2.2.0
   flutter_svg: ^0.21.0+1
+  dio: ^4.0.0
+  provider:
+  lottie: ^1.0.1 
+  timeago: ^2.0.26
+  pull_to_refresh: ^1.5.8
 
 dev_dependencies:
   flutter_test:
