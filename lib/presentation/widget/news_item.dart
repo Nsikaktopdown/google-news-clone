@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_news_clone/config/constant.dart';
+import 'package:google_news_clone/data/news_model.dart';
 
-class NewsItem extends StatelessWidget{
-  final 
+class NewsItem extends StatelessWidget {
+  final NewsModel model;
+  NewsItem({required this.model});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,12 +18,12 @@ class NewsItem extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "CNN",
+                  model.channel,
                   style: TextStyle(
                       fontWeight: FontWeight.w700, color: Color(0xFF717171)),
                 ),
                 Text(
-                  "Facebook officially launches Live Audio Rooms and podcasts in the U.S.",
+                  model.title,
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
                 ),
               ],
@@ -29,7 +31,7 @@ class NewsItem extends StatelessWidget{
             ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
-                  Constant.PNG_DIR + "facebook.png",
+                  Constant.PNG_DIR + model.image_url,
                   height: 100,
                   fit: BoxFit.cover,
                   width: 100,
@@ -40,7 +42,7 @@ class NewsItem extends StatelessWidget{
           ),
           Row(children: [
             Text(
-              "Headline . 10 hours ago",
+              model.type + " .   " + model.time,
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF717171),
@@ -50,6 +52,5 @@ class NewsItem extends StatelessWidget{
         ],
       ),
     );
-
   }
 }

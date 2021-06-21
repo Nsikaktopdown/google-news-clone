@@ -7,10 +7,10 @@ class NewsModel {
   String link = "";
 
   NewsModel(
-      {this.channel,
-      this.title,
-      this.type,
-      this.time,
-      this.link,
-      this.image_url});
+      {required this.channel,
+      required this.title,
+      required this.type,
+      required this.time,
+      required this.link,
+      required this.image_url});
 }
