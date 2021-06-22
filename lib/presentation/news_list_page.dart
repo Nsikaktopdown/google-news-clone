@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_news_clone/config/constant.dart';
 import 'package:google_news_clone/data/news_model.dart';
+import 'package:google_news_clone/presentation/basemodel.dart';
+import 'package:google_news_clone/presentation/news_viewmodel.dart';
 import 'package:google_news_clone/presentation/widget/briefing.dart';
 import 'package:google_news_clone/presentation/widget/news_item.dart';
 import 'package:google_news_clone/presentation/widget/top_bar.dart';
+import 'package:provider/provider.dart';
 
 class NewsListPage extends StatefulWidget {
   @override
@@ -13,6 +16,7 @@ class NewsListPage extends StatefulWidget {
 
 class NewsListPageState extends State {
   List<NewsModel> dummyNewsList = [];
+  NewsViewModel newsViewModel = NewsViewModel();
   @override
   void initState() {
     // TODO: implement initState
@@ -28,29 +32,35 @@ class NewsListPageState extends State {
           link: "",
           image_url: "facebook.png"));
     });
+    newsViewModel.getNews();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: SingleChildScrollView(
-                child: Container(
-                    padding: EdgeInsets.all(15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TopBar(),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Briefing(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _newsList()
-                      ],
-                    )))));
+    return ChangeNotifierProvider<NewsViewModel>(
+        create: (context) => newsViewModel,
+        child: Consumer<NewsViewModel>(
+            builder: (context, model, child) => Scaffold(
+                body: SafeArea(
+                    child: SingleChildScrollView(
+                        child: Container(
+                            padding: EdgeInsets.all(15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TopBar(),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Briefing(),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                model.state == ViewState.Loading
+                                    ? CircularProgressIndicator()
+                                    : _newsList()
+                              ],
+                            )))))));
   }
 
   Widget _newsList() {
@@ -58,10 +68,11 @@ class NewsListPageState extends State {
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
-        itemCount: dummyNewsList.length,
+        itemCount: newsViewModel.news.length,
         itemBuilder: (BuildContext context, int position) {
           return GestureDetector(
-              onTap: () => {}, child: NewsItem(model: dummyNewsList[position]));
+              onTap: () => {},
+              child: NewsItem(model: newsViewModel.news[position]));
         });
   }
 }

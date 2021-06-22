@@ -11,34 +11,45 @@ class NewsItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            Expanded(
-                child: Column(
-              mainAxisSize: MainAxisSize.min,
+          Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  model.channel,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700, color: Color(0xFF717171)),
+                Expanded(
+                    child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      model.channel,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF717171)),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      model.title,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                    ),
+                  ],
+                )),
+                SizedBox(
+                  width: 20,
                 ),
-                Text(
-                  model.title,
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-                ),
-              ],
-            )),
-            ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
-                  Constant.PNG_DIR + model.image_url,
-                  height: 100,
-                  fit: BoxFit.cover,
-                  width: 100,
-                ))
-          ]),
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      model.image_url,
+                      height: 100,
+                      fit: BoxFit.cover,
+                      width: 100,
+                    ))
+              ]),
           SizedBox(
-            height: 15,
+            height: 5,
           ),
           Row(children: [
             Text(
@@ -49,6 +60,10 @@ class NewsItem extends StatelessWidget {
                   fontSize: 12),
             ),
           ]),
+          SizedBox(
+            height: 5,
+          ),
+          Divider(color: Colors.grey)
         ],
       ),
     );
