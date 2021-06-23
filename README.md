@@ -1,6 +1,7 @@
 # google_news_clone
 
 Google News clone app using Flutter and HarperDB.
+![logo](assets/png/demo.png)
 
 ## Getting Started
 
