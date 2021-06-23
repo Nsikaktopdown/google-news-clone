@@ -5,7 +5,7 @@ Google News clone app using Flutter and HarperDB.
 
 ## Getting Started
 
-This project is a simple Google news clone app with HarperDB backend built with Flutter. You simply seed data to HarperDB using Postman and fetch using an network library of your choice. For this project, I am using [Dio](https://pub.dev/packages/dio).
+This project is a simple Google news clone app built with Flutter + [HarperDB API](https://harperdb.io/) . You simply seed data to HarperDB using Postman and fetch using an network library of your choice. For this project, I am using [Dio](https://pub.dev/packages/dio).
 
 A few resources to get you started if this is your first Flutter project:
 
