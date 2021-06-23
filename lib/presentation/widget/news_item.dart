@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_news_clone/config/constant.dart';
 import 'package:google_news_clone/data/news_model.dart';
@@ -41,11 +42,21 @@ class NewsItem extends StatelessWidget {
                 ),
                 ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      model.image_url,
+                    child: CachedNetworkImage(
+                      imageUrl: model.image_url,
                       height: 100,
-                      fit: BoxFit.cover,
                       width: 100,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     ))
               ]),
           SizedBox(

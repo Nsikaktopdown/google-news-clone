@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:google_news_clone/config/constant.dart';
 import 'package:google_news_clone/data/news_model.dart';
 import 'package:google_news_clone/presentation/basemodel.dart';
@@ -8,6 +9,7 @@ import 'package:google_news_clone/presentation/widget/briefing.dart';
 import 'package:google_news_clone/presentation/widget/news_item.dart';
 import 'package:google_news_clone/presentation/widget/top_bar.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
 
 class NewsListPage extends StatefulWidget {
   @override
@@ -59,7 +61,8 @@ class NewsListPageState extends State {
                                       height: 20,
                                     ),
                                     model.state == ViewState.Loading
-                                        ? CircularProgressIndicator()
+                                        ? Center(
+                                            child: CircularProgressIndicator())
                                         : _newsList()
                                   ],
                                 ))))))));
@@ -73,7 +76,38 @@ class NewsListPageState extends State {
         itemCount: newsViewModel.news.length,
         itemBuilder: (BuildContext context, int position) {
           return GestureDetector(
-              onTap: () => {},
+              onTap: () => {
+                    if (Platform.isAndroid)
+                      {
+                        FlutterWebBrowser.openWebPage(
+                          url: newsViewModel.news[position].link,
+                          customTabsOptions: CustomTabsOptions(
+                            colorScheme: CustomTabsColorScheme.dark,
+                            toolbarColor: Colors.white,
+                            secondaryToolbarColor: Colors.green,
+                            navigationBarColor: Colors.white,
+                            addDefaultShareMenuItem: true,
+                            instantAppsEnabled: true,
+                            showTitle: true,
+                            urlBarHidingEnabled: true,
+                          ),
+                        )
+                      }
+                    else if (Platform.isIOS)
+                      {
+                        FlutterWebBrowser.openWebPage(
+                          url: newsViewModel.news[position].link,
+                          safariVCOptions: SafariViewControllerOptions(
+                            barCollapsingEnabled: true,
+                            preferredBarTintColor: Colors.white,
+                            preferredControlTintColor: Colors.white,
+                            dismissButtonStyle:
+                                SafariViewControllerDismissButtonStyle.close,
+                            modalPresentationCapturesStatusBarAppearance: true,
+                          ),
+                        )
+                      }
+                  },
               child: NewsItem(model: newsViewModel.news[position]));
         });
   }
