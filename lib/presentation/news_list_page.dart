@@ -42,25 +42,27 @@ class NewsListPageState extends State {
         child: Consumer<NewsViewModel>(
             builder: (context, model, child) => Scaffold(
                 body: SafeArea(
-                    child: SingleChildScrollView(
-                        child: Container(
-                            padding: EdgeInsets.all(15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TopBar(),
-                                SizedBox(
-                                  height: 30,
-                                ),
-                                Briefing(),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                model.state == ViewState.Loading
-                                    ? CircularProgressIndicator()
-                                    : _newsList()
-                              ],
-                            )))))));
+                    child: RefreshIndicator(
+                        onRefresh: () => newsViewModel.getNews(),
+                        child: SingleChildScrollView(
+                            child: Container(
+                                padding: EdgeInsets.all(15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TopBar(),
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    Briefing(),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    model.state == ViewState.Loading
+                                        ? CircularProgressIndicator()
+                                        : _newsList()
+                                  ],
+                                ))))))));
   }
 
   Widget _newsList() {

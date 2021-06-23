@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_news_clone/config/constant.dart';
 
-class Briefing extends StatelessWidget{
+class Briefing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   return  Container(
+    return Container(
         child: Column(
       children: [
         Row(
@@ -12,7 +12,7 @@ class Briefing extends StatelessWidget{
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Nsikak's Briefing",
+                Text("Your Briefing",
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
                 Text(
@@ -39,6 +39,5 @@ class Briefing extends StatelessWidget{
             ))
       ],
     ));
-  
   }
 }

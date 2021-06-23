@@ -34,7 +34,7 @@ dependencies:
   provider:
   #lottie: ^1.0.1 
   timeago: ^2.0.26
-  pull_to_refresh: ^1.5.8
+  pull_to_refresh: ^2.0.0
   kiwi: ^3.0.0
   equatable:
 

@@ -23,7 +23,7 @@ class NewsItem extends StatelessWidget {
                     Text(
                       model.channel,
                       style: TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: Color(0xFF717171)),
                     ),
                     SizedBox(
