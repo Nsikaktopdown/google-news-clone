@@ -11,9 +11,11 @@ class _$NewsAppModule extends NewsAppModule {
   void _configure() {
     final KiwiContainer container = KiwiContainer();
     container.registerFactory<NewsRemoteDatasource>(
-        (c) => NewsRemoteDatasourceImpl(Dio()));
-    container.registerFactory<NewsRepository>(
-        (c) => NewsRepositoryImpl(c<NewsRemoteDatasource>()));
+        (c) => NewsRemoteDatasourceImpl(c<Dio>()));
+    container.registerFactory<NewsRepository>((c) =>
+        NewsRepositoryImpl(c<NewsRemoteDatasource>(), c<SharedPreference>()));
     container.registerSingleton((c) => GetNewsUseCase(c<NewsRepository>()));
+    container.registerSingleton((c) => Dio());
+    container.registerSingleton((c) => SharedPreference());
   }
 }

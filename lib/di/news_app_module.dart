@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:google_news_clone/data/datasource/news_remote_datasource.dart';
+import 'package:google_news_clone/data/local/sharedpreference.dart';
 import 'package:google_news_clone/data/repository/news_repository_impl.dart';
 import 'package:google_news_clone/domain/repository/news_repository.dart';
 import 'package:google_news_clone/domain/usecase/get_news.dart';
@@ -15,6 +16,8 @@ abstract class NewsAppModule {
   @Register.factory(NewsRemoteDatasource, from: NewsRemoteDatasourceImpl)
   @Register.factory(NewsRepository, from: NewsRepositoryImpl)
   @Register.singleton(GetNewsUseCase)
+  @Register.singleton(Dio)
+  @Register.singleton(SharedPreference)
   void _configure();
 }
 

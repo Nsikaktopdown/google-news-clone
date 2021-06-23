@@ -14,6 +14,10 @@ class NewsViewModel extends BaseModel {
   Future<void> getNews() async {
     try {
       setState(ViewState.Loading);
+      /**
+   * Get basic auth token to be able to fetch news from HarperDB
+   */
+      await repository.getToken();
       var response = await repository.getNews();
       news.clear();
       news.addAll(response);

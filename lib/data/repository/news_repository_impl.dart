@@ -1,13 +1,30 @@
 import 'package:google_news_clone/data/datasource/news_remote_datasource.dart';
+import 'package:google_news_clone/data/local/sharedpreference.dart';
 import 'package:google_news_clone/data/news_model.dart';
 import 'package:google_news_clone/domain/repository/news_repository.dart';
+import 'package:google_news_clone/domain/usecase/get_token.dart';
 
 class NewsRepositoryImpl extends NewsRepository {
   NewsRemoteDatasource newsRemoteDatasource;
-  NewsRepositoryImpl(this.newsRemoteDatasource);
+  SharedPreference sharedPreference;
+  NewsRepositoryImpl(this.newsRemoteDatasource, this.sharedPreference);
+
+/**
+ * fetch Basic auth token from HarperDB
+ */
   @override
-  Future<List<NewsModel>> getNews() {
-    return newsRemoteDatasource.getNews(
-        "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5zaWthayIsInN1cGVyX3VzZXIiOnRydWUsImNsdXN0ZXJfdXNlciI6ZmFsc2UsImlhdCI6MTYyNDM1MjA3NCwiZXhwIjoxNjI0NDM4NDc0LCJzdWIiOiJvcGVyYXRpb24ifQ.LeFh8F-CCAMPGvPhAB3EpQcFbLp1FVr2UI0E7VbS-Zakd6BgWW2kf7Utclc8mjtlNQRuUTtu65RqUnRI9V4y8ybcHnljwDXoC7Mv8vXOtCzndpVskS66nWf4372FFFrw-xxJTQe06WN75-9utmdhmOw8w0BiS4eVe4wQm6XmMB4IU2ZCZQzuDeVSETFWFkIu369OXLP1wkHiPzUZ5BVdM5BABBATf06wV4RwYr0mQyVFWDNKzzbetYTrij-tFcobLMGynWdiA2OroII_D3rbaCLnH2le2MuC1f2oVdyxOyDApAfJOCN69PgIp4XG-37_taMuahhZxhgRW8vaXowf8vp4w7U2KuprUhPnTBtnhYqlLoS9FvjZJcGy3gbQECjrgJP3byEbZmIx7EBdwslbjOUpApvWKb7-VMKLOjMfg-YNfu2umoRnx7PFGEnQHisBvYNZl4fx_eLDI-YWa6KkbQzW4nqG30VYVkODcKZuGeD9VgxYRNV4LI_Efcx7YEIJqRgx5fvpUCusFC80i9HKtiJOZB4sVK89D-3QMOxl21XNdj_Fc4XHqCvl1mKMZ-xjKXlJV58xVeLEUWJP42SiJksv_K6F6vOSmhFs3q8nyVj6fpGwnn4ICn07CRRTD1ODDRdZTDI-mod72d6q4kpvw0xpn5vP5UznQ9jN_hU_V7M");
+  Future<bool> getToken() {
+    return newsRemoteDatasource
+        .getToken()
+        .then((value) => sharedPreference.set("token", value));
+  }
+
+/**
+ * Fetch news
+ */
+  @override
+  Future<List<NewsModel>> getNews() async {
+    return newsRemoteDatasource
+        .getNews(await sharedPreference.getString("token", "null"));
   }
 }
