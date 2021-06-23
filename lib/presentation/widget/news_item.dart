@@ -54,8 +54,13 @@ class NewsItem extends StatelessWidget {
                           ),
                         ),
                       ),
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
+                      placeholder: (context, url) => ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            color: Colors.grey,
+                          )),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ))
               ]),
